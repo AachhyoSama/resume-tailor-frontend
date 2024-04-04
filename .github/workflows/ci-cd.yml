@@ -30,7 +30,7 @@ jobs:
         path: dist/resume-tailor/
 
   deploy:
-    name: Deployment to S3 and CloudFront
+    name: Deployment
     needs: build
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
