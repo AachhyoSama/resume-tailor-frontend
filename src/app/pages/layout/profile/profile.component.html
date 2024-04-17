@@ -5,7 +5,9 @@
         <form [formGroup]="personalDetails">
           <!-- Start of form  -->
           <nb-card>
-            <nb-card-header> <h3>Personal Details</h3></nb-card-header>
+            <nb-card-header>
+              <h3>Personal Details</h3>
+            </nb-card-header>
             <nb-card-body>
               <div class="container">
                 <div class="row">
@@ -32,7 +34,7 @@
                           personalDetails.get('username').touched
                         "
                       >
-                        Full Name is required!
+                        Full Name is required.
                       </nb-error>
                     </div>
                   </div>
@@ -43,20 +45,20 @@
                       <label
                         for="email"
                         class="text-muted font-weight-bold small"
-                        >Email Address</label
+                        >Professional Email Address</label
                       >
                       <input
                         type="email"
                         class="form-control bg-light"
-                        id="email"
-                        formControlName="email"
+                        id="professionalEmail"
+                        formControlName="professionalEmail"
                         placeholder="Email address"
                       />
                       <nb-error
                         class="caption status-danger"
                         *ngIf="
-                          personalDetails.get('email').invalid &&
-                          personalDetails.get('email').touched
+                          personalDetails.get('professionalEmail').invalid &&
+                          personalDetails.get('professionalEmail').touched
                         "
                       >
                         Email is required and must be a valid email address.
@@ -308,14 +310,17 @@
                             class="text-muted font-weight-bold small"
                             >What was your role at the company?</label
                           >
+                          <!-- <input type="text" class="form-control bg-light" id="role_{{ i }}" formControlName="position"
+                            placeholder="Your role at the company" /> -->
+
                           <input
                             type="text"
                             class="form-control bg-light"
                             id="role_{{ i }}"
                             formControlName="position"
                             placeholder="Your role at the company"
+                            (input)="jobPosition = $event.target.value"
                           />
-
                           <!-- Error message -->
                           <nb-error
                             class="caption status-danger"
@@ -336,12 +341,16 @@
                             class="text-muted font-weight-bold small"
                             >For which company did you work?</label
                           >
+                          <!-- <input type="text" class="form-control bg-light" id="company_{{ i }}"
+                            formControlName="employer" placeholder="Company name" /> -->
+
                           <input
                             type="text"
                             class="form-control bg-light"
                             id="company_{{ i }}"
                             formControlName="employer"
                             placeholder="Company name"
+                            (input)="company = $event.target.value"
                           />
 
                           <!-- Error message -->
@@ -450,28 +459,48 @@
                       </div>
                       <div class="col-md-12">
                         <div class="form-group text-left">
-                          <div>
-                            <label
-                              for="responsibilities_{{ i }}"
-                              class="text-muted font-weight-bold small"
-                              >What did you do at the company?</label
-                            >
-                            <button
-                              nbButton
-                              [status]="status"
-                              outline
-                              [size]="size"
-                            >
-                              AI Generate
-                            </button>
-                          </div>
-                          <textarea
-                            class="form-control bg-light"
-                            id="responsibilities_{{ i }}"
-                            rows="5"
-                            formControlName="description"
-                            placeholder="Enter your responsibilities"
-                          ></textarea>
+                          <nb-card
+                            size="tiny"
+                            [nbSpinner]="loading"
+                            nbSpinnerStatus="primary"
+                            nbSpinnerSize="large"
+                            nbSpinnerMessage=""
+                            id="card.exp.resp_{{ i }}"
+                          >
+                            <nb-card-body height="300">
+                              <label
+                                for="responsibilities_{{ i }}"
+                                class="text-muted font-weight-bold small"
+                                >What did you do at the company?</label
+                              >
+                              <button
+                                nbButton
+                                [status]="status"
+                                outline
+                                [size]="size"
+                                (click)="onGenerateResponsibilitiesClick(i)"
+                              >
+                                AI Generate
+                              </button>
+                              <textarea
+                                class="form-control bg-light"
+                                id="responsibilities_{{ i }}"
+                                rows="5"
+                                formControlName="description"
+                                placeholder="Enter your responsibilities"
+                              ></textarea>
+
+                              <nb-error
+                                class="caption status-danger"
+                                *ngIf="
+                                  experienceGroup.get('description').invalid &&
+                                  experienceGroup.get('description').touched
+                                "
+                              >
+                                Description is required.
+                              </nb-error>
+                            </nb-card-body>
+                          </nb-card>
                         </div>
                       </div>
                     </div>
@@ -536,6 +565,7 @@
                             id="projectTitle_{{ i }}"
                             formControlName="name"
                             placeholder="Project title"
+                            (input)="projectTitle = $event.target.value"
                           />
                         </div>
                       </div>
@@ -554,6 +584,7 @@
                             id="organization_{{ i }}"
                             formControlName="employer"
                             placeholder="Organization name"
+                            (input)="projectCompany = $event.target.value"
                           />
                         </div>
                       </div>
@@ -602,7 +633,57 @@
                           />
                         </div>
                       </div>
+                      <!-- ====================================================================== -->
                       <div class="col-md-12">
+                        <div class="form-group text-left">
+                          <nb-card
+                            size="tiny"
+                            [nbSpinner]="loading"
+                            nbSpinnerStatus="primary"
+                            nbSpinnerSize="large"
+                            nbSpinnerMessage=""
+                            id="card.exp.resp_{{ i }}"
+                          >
+                            <nb-card-body height="300">
+                              <label
+                                for="projectDescription_{{ i }}"
+                                class="text-muted font-weight-bold small"
+                                >Describe the project</label
+                              >
+                              <button
+                                nbButton
+                                [status]="status"
+                                outline
+                                [size]="size"
+                                (click)="onGenerateProjectsClick(i)"
+                              >
+                                AI Generate
+                              </button>
+                              <textarea
+                                class="form-control bg-light"
+                                id="projectDescription_{{ i }}"
+                                rows="5"
+                                formControlName="description"
+                                placeholder="Describe your project"
+                              ></textarea>
+
+                              <nb-error
+                                class="caption status-danger"
+                                *ngIf="
+                                  projectGroup.get('description').invalid &&
+                                  projectGroup.get('description').touched
+                                "
+                              >
+                                Description is required.
+                              </nb-error>
+                            </nb-card-body>
+                          </nb-card>
+                        </div>
+                      </div>
+
+                      <!-- ============================================================================ -->
+
+                      <!-- <div class="col-md-12">
                         <div class="form-group text-left">
                           <div>
                             <label
@@ -627,7 +708,7 @@
                             placeholder="Describe your project"
                           ></textarea>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </nb-card-body>
@@ -1100,11 +1181,64 @@
         <form [formGroup]="professionalSummary">
           <!-- Start of form -->
           <nb-card>
-            <nb-card-header><h3>Summary</h3></nb-card-header>
+            <nb-card-header>
+              <h3>Summary</h3>
+            </nb-card-header>
             <nb-card-body>
               <div class="container">
                 <div class="row">
+                  <!-- ====================================================================== -->
                   <div class="col-md-12">
+                    <div class="form-group text-left">
+                      <nb-card
+                        size="tiny"
+                        [nbSpinner]="loading"
+                        nbSpinnerStatus="primary"
+                        nbSpinnerSize="large"
+                        nbSpinnerMessage=""
+                        id="card.professionalSummary"
+                      >
+                        <nb-card-body height="300">
+                          <label
+                            for="professionalSummary"
+                            class="text-muted font-weight-bold small"
+                            >Write a professional summary</label
+                          >
+                          <button
+                            nbButton
+                            [status]="status"
+                            outline
+                            [size]="size"
+                            (click)="onGenerateProfessionalSummaryClick()"
+                          >
+                            AI Generate
+                          </button>
+                          <textarea
+                            class="form-control bg-light"
+                            id="professionalSummary"
+                            rows="5"
+                            formControlName="professionalSummary"
+                            placeholder="Write your professional summary"
+                          ></textarea>
+
+                          <nb-error
+                            class="caption status-danger"
+                            *ngIf="
+                              professionalSummary.get('professionalSummary')
+                                .invalid &&
+                              professionalSummary.get('professionalSummary')
+                                .touched
+                            "
+                          >
+                            Write your professional summary in few words.
+                          </nb-error>
+                        </nb-card-body>
+                      </nb-card>
+                    </div>
+                  </div>
+
+                  <!-- ============================================================================ -->
+                  <!-- <div class="col-md-12">
                     <div class="form-group text-left">
                       <div>
                         <label
@@ -1138,7 +1272,7 @@
                         Write your professional summary in few words.
                       </nb-error>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </nb-card-body>
@@ -1148,7 +1282,7 @@
 
         <button nbButton nbStepperPrevious>prev</button>
         <button nbButton nbStepperNext [disabled]="!professionalSummary.valid">
-          next
+          preview Resume
         </button>
         <button
           nbButton
@@ -1165,13 +1299,17 @@
         <form [formGroup]="labelFive">
           <!-- Start of form -->
           <nb-card>
-            <nb-card-header><h3>Preview</h3></nb-card-header>
+            <nb-card-header> </nb-card-header>
             <nb-card-body>
               <div class="container">
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group text-left">
-                      <div>--- placeholder for viewer ---</div>
+                      <div class="border-5">
+                        <app-report-viewer
+                          [formData]="getFormData()"
+                        ></app-report-viewer>
+                      </div>
                     </div>
                   </div>
                 </div>
