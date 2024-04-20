@@ -7,6 +7,7 @@ import { FormLayoutsComponent } from './form-layouts/form-layouts.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { AiResumeComponent } from './ai-resume/ai-resume.component';
+import { AiCoverLetterComponent } from './ai-cover-letter/ai-cover-letter.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'ai-resume',
         component: AiResumeComponent,
+      },
+      {
+        path: 'ai-cover-letter',
+        component: AiCoverLetterComponent,
       },
       {
         path: 'datepicker',

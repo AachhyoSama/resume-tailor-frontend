@@ -31,6 +31,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: "AI Resume",
         link: "/pages/forms/ai-resume",
       },
+      {
+        title: "AI Cover Letter",
+        link: "/pages/forms/ai-cover-letter",
+      },
     ],
   },
   {
