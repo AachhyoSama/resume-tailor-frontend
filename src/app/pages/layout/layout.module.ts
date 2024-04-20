@@ -29,6 +29,7 @@ import { NewsService } from './news.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ReportViewerComponent } from './report-viewer/report-viewer.component';
 import { SpinnerColorComponent } from './spinner-color/spinner-color.component';
+import { ReportViewerCLComponent } from './report-viewer-cl/report-viewer-cl.component';
 
 @NgModule({
   imports: [
@@ -63,10 +64,11 @@ import { SpinnerColorComponent } from './spinner-color/spinner-color.component';
     AccordionComponent,
     ProfileComponent,
     ReportViewerComponent,
-    SpinnerColorComponent
+    SpinnerColorComponent,
+    ReportViewerCLComponent
   ],
   exports: [
-    ReportViewerComponent // Exporting the component
+    ReportViewerComponent, ReportViewerCLComponent // Exporting the component
   ],
   providers: [
     NewsService,

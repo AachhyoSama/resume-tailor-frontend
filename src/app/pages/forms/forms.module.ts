@@ -22,6 +22,7 @@ import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsModule as ngFormsModule } from '@angular/forms';
 import { AiResumeComponent } from './ai-resume/ai-resume.component';
 import { LayoutModule } from '../layout/layout.module';
+import { AiCoverLetterComponent } from './ai-cover-letter/ai-cover-letter.component';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { LayoutModule } from '../layout/layout.module';
     FormInputsComponent,
     FormLayoutsComponent,
     DatepickerComponent,
+    AiCoverLetterComponent
   
     
   ],

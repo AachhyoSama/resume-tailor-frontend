@@ -1,0 +1,61 @@
+<div class="report-viewer">
+  <div class="menu-bar">
+    <nb-actions size="medium">
+      <nb-action icon="maximize-outline" (click)="increaseFontSize()"></nb-action>
+      <nb-action icon="minimize-outline" (click)="decreaseFontSize()"></nb-action>
+      <nb-action icon="file-outline" (click)="downloadAsPDF()"></nb-action>
+      <nb-action icon="file-text-outline" (click)="downloadAsWord()"></nb-action>
+    </nb-actions>
+
+    <nb-select [(selected)]="selectedFont" (selectedChange)="changeFontType(selectedFont)" fieldSize="small">
+      <nb-option fieldSize="small" *ngFor="let item of fontOptions" [value]="item.value">{{ item.label }}</nb-option>
+    </nb-select>
+  </div>
+
+  <div class="report-viewer" #reportContent>
+    <div style="display: flex;">
+      <div style="flex: 1;">
+        <div class="headers1" style="height: 100%;">
+          <h3 style="font-size: 28px; margin-bottom: 0;">{{ formData["Personal Details"].username }}</h3>
+        </div>
+      </div>
+    
+      <div style="flex: 1;">
+        <div class="headers2" style="height: 100%; display: flex; flex-direction: column;">
+          <p style="font-size: 14px; margin: 0;">Phone: {{ formData["Personal Details"].phone }}</p>
+          <p style="font-size: 14px; margin: 0;">LinkedIn: {{ formData["Personal Details"].linkedinLink }}</p>
+          <p style="font-size: 14px; margin: 0;">Email: {{ formData["Personal Details"].email }}</p>
+          <p style="font-size: 14px; margin: 0;">Address: {{ formData["Personal Details"].address1 }}, {{ formData["Personal Details"].city }}, {{ formData["Personal Details"].state }}, {{ formData["Personal Details"].zip }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="formData && formData.CoverLetter">
+      <h6></h6>
+      <div class="resume-section">
+        <p> Dear Hiring manager, </p>
+        <div *ngFor="let paragraph of formData.CoverLetter">
+
+          <div>
+            <p style="text-align: justify;">{{ paragraph.paragraphOne }}</p>
+          </div>
+          <div>
+            <p style="text-align: justify;">{{ paragraph.paragraphTwo }}</p>
+          </div>
+          <div>
+            <p style="text-align: justify;">{{ paragraph.paragraphThree }}</p>
+          </div>
+          <div>
+            <p style="text-align: justify;">{{ paragraph.paragraphFour }}</p>
+          </div>
+          <div>
+            <p style="text-align: justify;">{{ paragraph.paragraphFive }}</p>
+          </div>
+        </div>
+        <div>
+          <p> Sincerly, </p>
+          <div>{{ formData["Personal Details"].username }}<p></p></div>
+        </div>
+      </div>
+    </div>
+    

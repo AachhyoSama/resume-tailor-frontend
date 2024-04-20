@@ -17,8 +17,8 @@
                 </form>
               </nb-card-body>
               <nb-card-footer>
-                <div><button nbButton [status]="status" outline [size]="size" (click)="onGenerateResume2()">
-                  AI Generate Resume
+                <div><button nbButton [status]="status" outline [size]="size" (click)="onGenerateCoverLetter()">
+                  AI Generate Cover Letter
                 </button></div>
               </nb-card-footer>
             </nb-card>
@@ -27,7 +27,7 @@
         <div class="col-md-8">
           <!-- New div side by side with the form -->
           <div >
-            <app-report-viewer [formData]="getFormData()"></app-report-viewer>
+            <app-report-viewer-cl [formData]="getFormData()"></app-report-viewer-cl>
           </div>
         </div>
       </div>

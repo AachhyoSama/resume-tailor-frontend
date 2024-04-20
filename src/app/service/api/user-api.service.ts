@@ -177,6 +177,11 @@ export class UserAPI {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     return this.http.post(`${this.baseUrl}/openai/chat/${email}`, requestBody, { headers });
   }
+  generateCoverLetter(requestBody: any, email: string): Observable<any> {    
+   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    return this.http.post(`${this.baseUrl}/openai/chat/cover-letter/${email}`, requestBody, { headers });
+  }
 }
 
 
